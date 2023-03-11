@@ -47,7 +47,7 @@ func main() {
 	//create our http server
 	srv := &http.Server{ //web server is listening for requests and send to router
 		Addr:         fmt.Sprintf(":%d", cfg.port),
-		Handler:      mux,
+		Handler:      app.routes(),
 		IdleTimeout:  time.Minute,
 		ReadTimeout:  10 * time.Second,
 		WriteTimeout: 30 * time.Second,
