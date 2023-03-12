@@ -1,0 +1,1 @@
+DELETE FROM water_bin;
