@@ -42,7 +42,8 @@ func main() {
 
 	//create a new server mux
 	mux := http.NewServeMux()
-	mux.HandleFunc("/v1/viewpig", app.Viewpig)
+	mux.HandleFunc("/v1/viewpig", app.ViewPig)
+	mux.HandleFunc("/v1/viewsties", app.ViewSties)
 
 	//create our http server
 	srv := &http.Server{ //web server is listening for requests and send to router
