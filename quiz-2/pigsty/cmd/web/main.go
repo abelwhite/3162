@@ -1,62 +1,74 @@
 package main
 
 import (
+	"context"
+	"database/sql"
 	"flag"
-	"fmt"
 	"log"
 	"net/http"
 	"os"
 	"time"
+
+	_ "github.com/jackc/pgx/v5/stdlib"
 )
 
-const version = "1.0.0"
 
-// config settings
-type config struct {
-	port int
-	env  string
-}
 
 // Dependency injection
 type application struct {
-	config config
-	logger *log.Logger
+	// pigs models.PigsModel
 }
 
 func main() {
 
-	var cfg config
 	//Create a flag for specifing the port number when starting the server
-	flag.IntVar(&cfg.port, "port", 4000, "API server port")
-	flag.StringVar(&cfg.env, "env", "development", "Environment (development | staging | production)")
-	//dsn := flag.String("dsn", os.Getenv("PIGSTYDB_DB_DSN"), "PostgreSQL DSN")
+	addr := flag.String("port", ":4000", "HTTP network address")
+	dsn := flag.String("dsn", os.Getenv("PIGSTYDB_DB_DSN"), "PostgreSQL DSN")
 	flag.Parse()
 
-	logger := log.New(os.Stdout, "", log.Ldate|log.Ltime)
-
-	//instance of application
-	app := &application{
-		config: cfg,
-		logger: logger,
+	//create an instance to the application pool
+	db, err := openDB(*dsn)
+	if err != nil {
+		log.Println(err)
+		return
 	}
 
-	//create a new server mux
-	mux := http.NewServeMux()
-	mux.HandleFunc("/v1/viewpig", app.ViewPig)
-	mux.HandleFunc("/v1/viewsties", app.ViewSties)
+	//create a new instance of the application type
+	app := &application{
+		//pigs: models.PigsModel{DB: db}, //has to be of connection pool
+	}
 
-	//create our http server
+	defer db.Close() //if we dont close the application loop we have memory leak
+	log.Println("Database connection pool established")
+
+	//create a customized server
 	srv := &http.Server{ //web server is listening for requests and send to router
-		Addr:         fmt.Sprintf(":%d", cfg.port),
-		Handler:      app.routes(),
-		IdleTimeout:  time.Minute,
-		ReadTimeout:  10 * time.Second,
-		WriteTimeout: 30 * time.Second,
+		Addr:    *addr,
+		Handler: app.routes(), //we created this routes server
+
 	}
 
 	//start our server
-	logger.Printf("Starting %s server om %s", cfg.env, srv.Addr)
-	err := srv.ListenAndServe()
-	logger.Fatal(err)
+	log.Printf("Starting Server on port %s", *addr)
+	err = srv.ListenAndServe()
+	log.Fatal(err) //should never be reached
 
+}
+
+// Get a database connection pool
+func openDB(dsn string) (*sql.DB, error) {
+	db, err := sql.Open("pgx", dsn) //check if dsn work
+	if err != nil {
+		return nil, err
+	}
+	//use a context to check if the DB is reachable
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel() //defer helps us not to use it in every if
+
+	//lets ping the db
+	err = db.PingContext(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return db, nil
 }
