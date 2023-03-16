@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS sties (
   sty_id bigserial PRIMARY KEY,
   sty_type text NOT NULL,
-  pig_id bigserial,
+  pig_id bigserial REFERENCES pigs(pig_id),
   water_bin_id bigserial,
   feed_bin_id bigserial,
   room_id bigserial,

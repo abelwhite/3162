@@ -1,1 +1,1 @@
-DROP TABLE IF EXISTS vaccines;
+DROP TABLE IF EXISTS pig_vaccines;
