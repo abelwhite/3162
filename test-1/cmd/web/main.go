@@ -10,7 +10,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/abelwhite/3162/test-1/internal/models"
+	"github.com/abelwhite/pigstydash/internal/models"
 	"github.com/alexedwards/scs/v2"
 	_ "github.com/jackc/pgx/v5/stdlib"
 )
@@ -19,8 +19,10 @@ import (
 type application struct {
 	errorLog       *log.Logger
 	infoLog        *log.Logger
+	user           models.UserModel
 	pig            models.PigModel
 	room           models.RoomModel
+	pigsty         models.PigstyModel
 	sessionManager *scs.SessionManager //create a field sessionManager of type pointscs.SessionManager
 }
 
@@ -50,8 +52,10 @@ func main() {
 	app := &application{
 		errorLog:       errorLog,
 		infoLog:        infoLog,
+		user:            models.UserModel{DB: db},
 		pig:            models.PigModel{DB: db},
 		room:           models.RoomModel{DB: db},
+		pigsty:         models.PigstyModel{DB: db},
 		sessionManager: sessionManager,
 	}
 	// cleanup the connection pool

@@ -153,19 +153,19 @@ a{
    <body>
     <div class ="modal-box center">
     <div class="form_container">
-    <form name="form" action="/pig/create" method="POST">
-     
+    <form name="form" action="/pig/update" method="POST">
+      {{ range .Pig}}
       <div class="form_item">
-        <h1>Create a new Pig</h1>
+        <h1>Update Pig</h1>
     </div>
       <div class="form_wrap form_grp">
           <div class="form_item">
               <label>Room</label>
-              <input type="text" name="room">
+              <input type="text" name="room" value="{{.Room}}">
           </div>
           <div class="form_item">
               <label>Pigsty</label>
-              <input type="text" name="pigsty" >
+              <input type="text" name="pigsty" value="{{.Pigsty}}">
 
           </div>
       </div>
@@ -173,47 +173,47 @@ a{
       <div class="form_wrap form_grp">
           <div class="form_item">
               <label>Breed</label>
-              <input type="text" name="breed" >
+              <input type="text" name="breed" value="{{.Breed}}">
 
           </div>
           <div class="form_item"> 
             <label>Age</label>
-            <input type="number" name="age"  >
+            <input type="number" name="age"  value="{{.Age}}">
 
         </div>        
       </div>
       <div class="form_wrap">
         <div class="form_item">
           <label for="dob">Date of Birth</label>
-          <input type="date" id="dob" name="dob" >
+          <input type="date" id="dob" name="dob" value="{{.Dob}}">
         </div>
 
     </div>
       <div class="form_wrap form_grp">
           <div class="form_item">
               <label>Weight(kg)</label>
-              <input type="number" name="weight">
+              <input type="number" name="weight" value="{{.Weight}}">
 
           </div>
           <div class="form_item">
             <label>Gender</label>
-            <select name="gender">
-                <option>Male</option>
-                <option>Female</option>
-            </select>
+            <select name="gender" value="{{.Gender}}">
+              <option value="Male"{{ if eq .Gender "Male" }} selected{{ end }}>Male</option>
+              <option value="Female"{{ if eq .Gender "Female" }} selected{{ end }}>Female</option>
+              </select>
         </div>
       </div>
-    
       <div class="form_wrap form_grp">
         <div class="btn form_item">
           <button type="button" onclick="document.location='/pig/show'" class="btnn">Cancel</button>
         </div>
         <div class="btn form_item">
-          <input type="submit" value="Create Pig">
+          <input type="submit" value="Update Pig">
         </div>
       </div>
+
+      {{ end }} 
     </form>
-    
   </div>
 </div>
 </div>

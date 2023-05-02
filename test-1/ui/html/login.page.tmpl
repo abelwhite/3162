@@ -14,11 +14,11 @@
         <h2>Login</h2>
         <h3>Enter your credentials</h3>
 
-        <form class="login-form">
-            <input type="text" placeholder="Username">
-            <input type="password" placeholder="Password">
+        <form action="/login" method="POST" class="login-form">
+            <input type="text" placeholder="Email" name="email">
+            <input type="password" placeholder="Password" name="password">
             <a href="#">Forget your password?</a>
-            <a href="SignUp.html">New here? Create an account</a>
+            <a href="/signup">New here? Create an account</a>
             <button type="submit">LOGIN</button>
         </form>
     </div>
