@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="/static/css/sidebar.css">
+    <title>Dashboard</title>
+</head>
+<body>
+    
+    <nav class="sidebar">
+        <div class="sidebar-inner">
+            <header class="sidebar-header">
+                <button type="button" class="sidebar-burger" onclick="toggleSidebar()">
+                    <i class='bx bx-menu'></i>
+                </button>
+                <img src="/static/img/logolongtrans.png" alt="" class="sidebar-logo">
+            </header>
+
+            <nav class="sidebar-menu">
+                
+                <button onclick="document.location='/dashboard'" type="button">
+                    <i class='bx bxs-dashboard' ></i>
+                    <span>Dashboard</span>
+                </button>
+                
+                <button onclick="document.location='/profile'" type="button">
+                    <i class='bx bx-user-circle' ></i>
+                    <span>Profile</span>
+                </button>
+                <button onclick="document.location='/Settings'" type="button" class="has-border">
+                    <i class='bx bx-cog' ></i>
+                    <span>Settings</span>
+                </button>
+                <button onclick="document.location='ViewPen.html'" type="button">
+                    <i class='bx bxs-factory'></i>
+                    <span>View Pen</span>
+                </button>
+                <button onclick="document.location='ViewPig.html'" type="button">
+                    <i class='bx bxs-mask bx-rotate-180' ></i>
+                    <span>View Pig</span>
+                </button>
+                <button onclick="document.location='FeedBin.html'" type="button">
+                    <i class='bx bxs-piano bx-rotate-180' ></i>
+                    <span>Feed Bin</span>
+                </button>
+                <button onclick="document.location='WaterBin.html'" type="button" class="has-border">
+                    <i class='bx bxs-color-fill' ></i>
+                    <span>Water Bin</span>
+                </button>
+                <button onclick="document.location='Temperature.html'" type="button">
+                    <i class='bx bx-sun' ></i>
+                    <span>Temperature</span>
+                </button>
+                <button onclick="document.location='Humidity.html'" type="button">
+                    <i class='bx bxs-droplet' ></i>
+                    <span>Humidity</span>
+            </nav>
+
+
+        </div>
+    </nav>
+
+    <div class="container">
+        <h5><span id = "gray">Dashboard</span>⠀⠀>⠀⠀Humidity</h5>
+        
+    </div>
+
+    <script type="text/javascript">
+        const toggleSidebar = () => document.body.classList.toggle("open");
+    </script>
+
+</body>
+</html>
